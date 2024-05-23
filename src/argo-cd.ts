@@ -22,9 +22,9 @@ enum Executable {
   netbsd,
   openbsd,
   sunos,
-  darwin = `argocd-darwin-${CPU_ARCH}`,
-  linux = `argocd-linux-${CPU_ARCH}`,
-  win32 = `argocd-windows-${CPU_ARCH}.exe`,
+  darwin = 'argocd-darwin',
+  linux = 'argocd-linux',
+  win32 = 'argocd-windows.exe',
 }
 
 export default class ArgoCD {
@@ -50,7 +50,7 @@ export default class ArgoCD {
     // If hitting GitHub API rate limit, add `GITHUB_TOKEN` to raise limit
     const octoConfig = process.env.GITHUB_TOKEN ? {authStrategy: createActionAuth} : {};
     const octokit = new Octokit(octoConfig);
-    const executable = Executable[PLATFORM];
+    const executable = Executable[PLATFORM] + '-' + CPU_ARCH;
 
     try {
       const releases = await octokit.repos.getReleaseByTag({

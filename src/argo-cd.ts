@@ -10,6 +10,7 @@ import * as path from 'path';
 import * as process from 'process';
 
 const PLATFORM = process.platform;
+const CPU_ARCH = os.arch();
 const EXE_NAME = PLATFORM === 'win32' ? 'argocd.exe' : 'argocd';
 const ASSET_DEST = path.join(os.homedir(), EXE_NAME);
 
@@ -21,9 +22,9 @@ enum Executable {
   netbsd,
   openbsd,
   sunos,
-  darwin = 'argocd-darwin-amd64',
-  linux = 'argocd-linux-amd64',
-  win32 = 'argocd-windows-amd64.exe',
+  darwin = `argocd-darwin-${CPU_ARCH}`,
+  linux = `argocd-linux-${CPU_ARCH}`,
+  win32 = `argocd-windows-${CPU_ARCH}.exe`,
 }
 
 export default class ArgoCD {
